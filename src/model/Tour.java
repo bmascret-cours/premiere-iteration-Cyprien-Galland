@@ -1,3 +1,5 @@
+package model;
+
 /**
  * 
  */
@@ -6,27 +8,40 @@
  * @author cypri
  *
  */
-public class Tour extends AbstractPieces{
+public class Tour extends AbstractPiece{
 	Couleur Couleur;
 	Coord Coord;
 	
 	public Tour(){
-		super ()
+		super ();
 	}
 	
-	public Tour(Couleur Couleur, Coord Coord) {
-		super()
+	public Tour(Couleur Couleur, int x, int y) {
 		this.Couleur = Couleur;
-		this.Coord = Coord;
+		this.Coord = new Coord(x,y);
 	}
 
 	public boolean isMoveOk(int xFinal, int yFinal) {
-		if xfinal == this.Coord.x :
-			return True;
-		else if yfinal == this.Coord.y :
-			return True;
-		else :
-			return False
+		if (xFinal == this.Coord.X()) 
+			return true;
+		
+		else if (yFinal == this.Coord.Y()) 
+			return true;
+		
+		else 
+			return false;
+		
 	}
+	
+	public Couleur getCouleur() {
+		return this.Couleur;
+	}
+	
+	
+	public String toString() {
+		return "Cette pièce est de couleur " + this.Couleur + " en position " + this.Coord;
+	}
+	
+
 
 }

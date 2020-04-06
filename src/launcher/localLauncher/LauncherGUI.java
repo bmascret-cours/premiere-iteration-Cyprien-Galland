@@ -24,6 +24,7 @@ public class LauncherGUI {
 	/**
 	 * @param args
 	 */
+	
 	public static void main(String[] args) {
 
 		ChessGame chessGame;	
