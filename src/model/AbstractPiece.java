@@ -67,21 +67,6 @@ public class AbstractPiece implements Pieces{
 		return "Cette pièce est de couleur " + this.Couleur + " en position " + this.Coord;
 	}
 	
-	/*public static void main() {
-		Pieces maTour = new Tour(model.Couleur.NOIR, new Coord(4, 8));
-		maTour.toString();
-		maTour.isMoveOk(6, 8);
-		maTour.isMoveOk(4, 6);
-		maTour.isMoveOk(8,4);
-		maTour.getCouleur();
-		maTour.getX();
-		maTour.getY();
-		maTour.move(5, 5);
-		maTour.capture();
-		maTour.toString();
-		
-		Pieces maTourBis = new Tour();
-		maTourBis.toString();
-	}*/
+
 
 }
