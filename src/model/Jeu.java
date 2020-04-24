@@ -7,37 +7,42 @@ import java.util.List;
 import tools.ChessPiecesFactory;
 
 public class Jeu {
-	List<Pieces> liste_pieces;
-	Couleur couleur;
+	public List<Pieces> Pieces;
 
-	public Jeu(Couleur Couleur) {
-		liste_pieces = ChessPiecesFactory.newPieces(Couleur);
-		couleur = Couleur;
-		// TODO Auto-generated constructor stub
+	public Jeu(Couleur couleur) {
+		this.Pieces=ChessPiecesFactory.newPieces(couleur);
 	}
 	
-	public void main(String[] args) {
+	/*public void main(String[] args) {
 		Jeu test1 = new Jeu(model.Couleur.BLANC);
 		System.out.println(test1);
 		// TODO Auto-generated method stub
-	}
+	}*/
 	
-	public List<String> ToString() {
-		List liste = null;
-		for (Pieces i : this.liste_pieces) {
-			String txt = i.toString();
-			liste.add(txt);
+	@Override
+	public String toString() {
+		for(Pieces p:Pieces) {
+			System.out.println(p.toString());
 		}
-		return liste;
+
+	return("");
 	}
 	
-	 private Pieces findPiece(int x, int y) {
-		 //TODO
-	 }
+	public Pieces findPiece(int x,int y) {
+		Pieces P=null;
+		for(Pieces p:Pieces) {
+			if((((AbstractPiece)p).coord.x==x) && (((AbstractPiece)p).coord.y==y)){
+				P=p;
+			}
+		}
+
+		return P;
+	}
+	
 	 
 	 public boolean isPieceHere(int x, int y) {
 		 boolean result = false;
-		 for (Pieces i : this.liste_pieces) {
+		 for (Pieces i : this.Pieces) {
 			 if (i.getX() == x) {
 				 if (i.getY() == y) {
 					 result = true;
@@ -49,7 +54,7 @@ public class Jeu {
 	 
 	 public boolean isMoveOk(int xInit, int yInit, int xFinal, int yFinal) {
 		 boolean result = false;
-		 for (Pieces i : this.liste_pieces) {
+		 for (Pieces i : this.Pieces) {
 			 if (i.isMoveOk(xFinal, yFinal)){
 				 result = true;
 			 }
@@ -59,7 +64,7 @@ public class Jeu {
 	 
 	 public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
 		 boolean result = false;
-		 for (Pieces i : this.liste_pieces) {
+		 for (Pieces i : this.Pieces) {
 			 if (i.move(xFinal, yFinal)) {
 				 result = true;
 			 }
@@ -77,20 +82,22 @@ public class Jeu {
 	 
 	 public Couleur getPieceColor(int x, int y) {
 		 //TODO
+		 return null;
 	 }
 	 
 	 public java.lang.String getPieceType(int x, int y){
 		 //TODO
+		 return null;
 	 }
 	 
 	 public Couleur getCouleur() {
-		 return this.couleur;
+		 return this.getCouleur();
 	 }
 	 
 	 public java.util.List<PieceIHM> getPiecesIHM() {
 		 PieceIHM newPieceIHM = null;
 		 List<PieceIHM> list = new LinkedList<PieceIHM>();      
-		 for (Pieces piece : pieces){    
+		 for (Pieces piece : Pieces){    
 			 boolean existe = false;    
 			 // si le type de piece existe déjà dans la liste de PieceIHM     
 			 // ajout des coordonnées de la pièce dans la liste de Coord de ce type     
@@ -136,11 +143,12 @@ public class Jeu {
 	 
 	 public boolean pawnPromotion(int xFinal, int yfinal, java.lang.String type) {
 		 //TODO
+		 return false;
 	 }
 	 
 	 public Coord getKingCoord() {
 		 Coord result = new Coord(0,0);
-		 for (Pieces i : this.liste_pieces) {
+		 for (Pieces i : this.Pieces) {
 			 if (i instanceof Roi){
 				 result.setX(i.getX());
 				 result.setY(i.getY());

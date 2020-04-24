@@ -1,34 +1,11 @@
 package model;
 
-public class Pion extends AbstractPiece {
+public class Pion extends AbstractPiece implements Pions {
+	boolean T1;
 
-	Couleur Couleur;
-	Coord Coord;
-	
-	public Pion(){
-		super ();
-		this.Couleur = model.Couleur.NOIRBLANC;
-		this.Coord = new Coord(0,0);
-	}
-	
-	public Pion(Couleur Couleur, int x, int y) {
-		super();
-		this.Couleur = Couleur;
-		this.Coord = new Coord(x,y);
-	}
-	
-	public int getX() {
-		return this.Coord.X();
-	}
-	public int getY() {
-		return this.Coord.Y();
-	}
-	
-	public boolean capture() {
-		//retourne true si la pièce est capturée, et positionne x et y à -1
-		// On suppose qu'elle est appelée à la capture de la pièce, et pas en dehors.
-		this.Coord = new model.Coord(-1,-1);
-		return true;
+	public Pion(Couleur couleur,Coord coord) {
+		super(couleur, coord);
+		this.T1=true;
 	}
 	
 	public boolean isMoveOk(int xFinal, int yFinal) {
@@ -36,8 +13,8 @@ public class Pion extends AbstractPiece {
 			return false; //On vérifie qu'on reste sur l'échiquier
 		else if (yFinal > 8)
 			return false;
-		else if (xFinal == this.Coord.X()) 
-			if (yFinal == this.Coord.Y() + 1)
+		else if (xFinal == this.coord.X()) 
+			if (yFinal == this.coord.Y() + 1)
 				return true;
 			else 
 				return false;
@@ -45,13 +22,9 @@ public class Pion extends AbstractPiece {
 			return false;
 	}
 	
-	public Couleur getCouleur() {
-		return this.Couleur;
+	@Override
+	public boolean isMoveDiagOk(int xFinal, int yFinal) {
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
-	
-	public String toString() {
-		return "Cette pièce est de couleur " + this.Couleur + " en position " + this.Coord;
-	}
-
 }

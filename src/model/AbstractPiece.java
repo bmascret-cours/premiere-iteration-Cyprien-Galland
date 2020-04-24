@@ -8,24 +8,30 @@ package model;
  * @author cypri
  *
  */
-public class AbstractPiece implements Pieces{
-	Couleur Couleur;
-	Coord Coord;
+public class AbstractPiece implements Pieces {
+	Couleur couleur;
+	Coord coord;
 	
-	public AbstractPiece() {
-		this.Couleur = model.Couleur.NOIRBLANC;
-		this.Coord = new Coord(0,0);
+
+	public AbstractPiece(Couleur couleur,Coord coord) {
+		this.coord=coord;
+		this.couleur=couleur;
 	}
 	
+	@Override
 	public int getX() {
-		return this.getCoord().X();
+		return this.coord.x;
 	}
+	
+	@Override
 	public int getY() {
-		return this.getCoord().Y();
+		return this.coord.y;
 	}
+	
 	public Couleur getCouleur() {
-		return this.Couleur;
+		return this.couleur;
 	}
+	
 	
 	public boolean isMoveOk(int xFinal, int yFinal) {
 		//retourne true si le déplacement est possible
@@ -33,20 +39,18 @@ public class AbstractPiece implements Pieces{
 		return true;
 	}
 	
-	public boolean move(int xFinal, int yFinal) {
-		//return true si le déplacement à été fait
-		if (this.Coord.X() == xFinal) {
-			if (this.Coord.Y() == yFinal) {
-				return true;
-			}
-			else {
-				return false;
-			}
+	
+	@Override
+	public boolean move(int xFinal,int yFinal) {
+		if(this.isMoveOk(xFinal,yFinal)){
+			this.coord.x=xFinal;
+			this.coord.y=yFinal;
+			return true;
 		}
-		else { 
-			return false;
-		}
+		else return false;
 	}
+	
+	
 	
 	public boolean capture() {
 		//retourne true si la pièce est capturée, et positionne x et y à -1
@@ -55,18 +59,28 @@ public class AbstractPiece implements Pieces{
 		return true;
 	}
 	
+	/*public boolean Capture() {
+		this.coord.x=-1;
+		this.coord.y=-1;
+		return true;
+	}*/
+	
 	public Coord getCoord() {
-		return this.Coord;
+		return this.coord;
 	}
 
 	public void setCoord(Coord coord) {
-		this.Coord = coord;
+		this.coord = coord;
 	}
 
+	@Override
 	public String toString() {
-		return "Cette pièce est de couleur " + this.Couleur + " en position " + this.Coord;
+		String S="Je suis un "+this.getClass().getSimpleName()+" de couleur "+(this.couleur==Couleur.BLANC ? "blanche":"noire")+" et je me situe en : ["+this.coord.x+","+this.coord.y+"]";
+		return S;
 	}
 	
 
 
 }
+
+

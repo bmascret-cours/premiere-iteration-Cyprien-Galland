@@ -19,3 +19,4 @@ public interface Pieces {
 	public boolean capture();
 	
 }
+

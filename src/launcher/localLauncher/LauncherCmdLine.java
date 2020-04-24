@@ -32,20 +32,23 @@ public class LauncherCmdLine {
 		vue.go();
 		*/
 		
-		Pieces maTour = new Tour(model.Couleur.NOIR, 4, 8);
+		Coord coords = new Coord(9,8);
+		
+		Pieces maTour = new Tour(model.Couleur.BLANC, coords);
 		System.out.println(maTour.toString());
 		System.out.println(maTour.isMoveOk(6, 8));
 		System.out.println(maTour.isMoveOk(4, 6));
-		System.out.println(maTour.isMoveOk(8,4));
+		System.out.println(maTour.isMoveOk(6,4));
 		System.out.println(maTour.getCouleur());
 		System.out.println(maTour.getX());
 		System.out.println(maTour.getY());
 		System.out.println(maTour.move(5, 5));
+		System.out.println(maTour.move(6, 8));
+		System.out.println(maTour.move(6, 2));
 		System.out.println(maTour.capture());
 		System.out.println(maTour.toString());
 		
-		Pieces maTourBis = new Tour();
-		System.out.println(maTourBis.toString());
+		
 	}
 
 }
