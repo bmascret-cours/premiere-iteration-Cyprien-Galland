@@ -1,86 +1,58 @@
 package model;
 
-/**
- * 
- */
-
-/**
- * @author cypri
- *
- */
-public class AbstractPiece implements Pieces {
-	Couleur couleur;
-	Coord coord;
+public abstract class AbstractPiece implements Pieces{
 	
-
-	public AbstractPiece(Couleur couleur,Coord coord) {
-		this.coord=coord;
-		this.couleur=couleur;
+	private Coord coord;
+	private Couleur couleur;
+	
+	public AbstractPiece(Couleur couleur, Coord coord) {
+		this.couleur = couleur;
+		this.coord = coord;
 	}
 	
-	@Override
-	public int getX() {
-		return this.coord.x;
+	public boolean capture() {
+		return false;
 	}
-	
-	@Override
-	public int getY() {
-		return this.coord.y;
-	}
-	
+      
 	public Couleur getCouleur() {
 		return this.couleur;
 	}
-	
-	
-	public boolean isMoveOk(int xFinal, int yFinal) {
-		//retourne true si le déplacement est possible
-		//dépends de la pièce : non codée ici
-		return true;
+	            
+	public int getX() {
+		Coord tmp = new Coord(this.coord.x, this.coord.y);
+		return tmp.x;
 	}
-	
-	
-	@Override
-	public boolean move(int xFinal,int yFinal) {
-		if(this.isMoveOk(xFinal,yFinal)){
-			this.coord.x=xFinal;
-			this.coord.y=yFinal;
+	            
+	public int getY() {
+		Coord tmp = new Coord(this.coord.x, this.coord.y);
+		return tmp.y;
+	}
+	            
+	public abstract boolean isMoveOk(int xFinal, int yFinal);
+	            
+	public boolean move(int x, int y) {
+		if (isMoveOk(x,y)) {
+			this.coord.x = x;
+			this.coord.y = y;
 			return true;
+		}else {
+			return false;
 		}
-		else return false;
+	}
+	            
+	public java.lang.String toString(){
+		return this.coord.toString()+" "+this.getClass().getSimpleName();
 	}
 	
-	
-	
-	public boolean capture() {
-		//retourne true si la pièce est capturée, et positionne x et y à -1
-		// On suppose qu'elle est appelée à la capture de la pièce, et pas en dehors.
-		this.setCoord(new model.Coord(-1,-1));
-		return true;
-	}
-	
-	/*public boolean Capture() {
-		this.coord.x=-1;
-		this.coord.y=-1;
-		return true;
+	/*public static void main(String [] a){
+		Pieces maTour = new Tour(Couleur.NOIR, new Coord(0, 0));
+		Pieces maReine = new Reine(Couleur.NOIR, new Coord(0, 0));
+		Pieces monRoi = new Roi(Couleur.NOIR, new Coord(5, 5));
+		Pieces monPion = new Pion(Couleur.NOIR, new Coord(5, 5));
+		System.out.println(monPion.toString());
+		System.out.println(maReine.toString());
+		System.out.println(maTour.toString());
+		System.out.println(monRoi.toString());
+
 	}*/
-	
-	public Coord getCoord() {
-		return this.coord;
-	}
-
-	public void setCoord(Coord coord) {
-		this.coord = coord;
-	}
-
-	@Override
-	public String toString() {
-		String S="Je suis un "+this.getClass().getSimpleName()+" de couleur "+(this.couleur==Couleur.BLANC ? "blanche":"noire")+" et je me situe en : ["+this.coord.x+","+this.coord.y+"]";
-		return S;
-	}
-	
-
-
 }
-
-

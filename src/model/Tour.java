@@ -1,34 +1,20 @@
 package model;
 
-/**
- * 
- */
-
-/**
- * @author cypri
- *
- */
-
+import model.Couleur;
 
 public class Tour extends AbstractPiece {
-
-	public Tour(Couleur couleur,Coord coord) {
+	
+	public Tour(Couleur couleur, Coord coord){
 		super(couleur, coord);
 	}
 	
 	public boolean isMoveOk(int xFinal, int yFinal) {
-		if (xFinal > 8)
-			return false; //On vérifie qu'on reste sur l'échiquier
-		else if (yFinal > 8)
+		if (this.getX() == xFinal && this.getY() == yFinal) {
 			return false;
-		else if (xFinal == this.coord.X())
+		}else if (xFinal == this.getX() || yFinal == this.getY()) {
 			return true;
-		else if (yFinal == this.coord.Y()) 
-			return true;
-		else 
+		}else {
 			return false;
+		}
 	}
-	
-
-
 }

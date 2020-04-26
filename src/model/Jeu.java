@@ -1,163 +1,150 @@
 package model;
 
-
 import java.util.LinkedList;
 import java.util.List;
 
 import tools.ChessPiecesFactory;
 
 public class Jeu {
-	public List<Pieces> Pieces;
+	
+	private List<Pieces> pieces = null;
+	private Couleur couleur;
 
-	public Jeu(Couleur couleur) {
-		this.Pieces=ChessPiecesFactory.newPieces(couleur);
+	public Jeu(Couleur color) {
+		this.couleur = color;
+		this.pieces = ChessPiecesFactory.newPieces(couleur);
 	}
 	
-	/*public void main(String[] args) {
-		Jeu test1 = new Jeu(model.Couleur.BLANC);
-		System.out.println(test1);
-		// TODO Auto-generated method stub
-	}*/
-	
-	@Override
 	public String toString() {
-		for(Pieces p:Pieces) {
-			System.out.println(p.toString());
+		String ret = "";
+		for (Pieces p : pieces) {
+			ret = ret + p.toString();
 		}
-
-	return("");
+		return ret;
 	}
-	
-	public Pieces findPiece(int x,int y) {
-		Pieces P=null;
-		for(Pieces p:Pieces) {
-			if((((AbstractPiece)p).coord.x==x) && (((AbstractPiece)p).coord.y==y)){
-				P=p;
+	public boolean isPieceHere(int x, int y) {
+		for (Pieces p : pieces) {
+			if (x == p.getX() && y == p.getY()) {
+				return true;
 			}
 		}
-
-		return P;
+		return false;
 	}
 	
-	 
-	 public boolean isPieceHere(int x, int y) {
-		 boolean result = false;
-		 for (Pieces i : this.Pieces) {
-			 if (i.getX() == x) {
-				 if (i.getY() == y) {
-					 result = true;
-				 }
-			 }
-		 }
-		 return result;
-	 }
-	 
-	 public boolean isMoveOk(int xInit, int yInit, int xFinal, int yFinal) {
-		 boolean result = false;
-		 for (Pieces i : this.Pieces) {
-			 if (i.isMoveOk(xFinal, yFinal)){
-				 result = true;
-			 }
-		 }
-		 return result;
-	 }
-	 
-	 public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
-		 boolean result = false;
-		 for (Pieces i : this.Pieces) {
-			 if (i.move(xFinal, yFinal)) {
-				 result = true;
-			 }
-		 }
-		 return result;
-	 }
-	 
-	 public void setPossibleCapture() {
-		 //TODO
-	 }
-	 
-	 public void capture() {
-		 //TODO
-	 }
-	 
-	 public Couleur getPieceColor(int x, int y) {
-		 //TODO
-		 return null;
-	 }
-	 
-	 public java.lang.String getPieceType(int x, int y){
-		 //TODO
-		 return null;
-	 }
-	 
-	 public Couleur getCouleur() {
-		 return this.getCouleur();
-	 }
-	 
-	 public java.util.List<PieceIHM> getPiecesIHM() {
-		 PieceIHM newPieceIHM = null;
-		 List<PieceIHM> list = new LinkedList<PieceIHM>();      
-		 for (Pieces piece : Pieces){    
-			 boolean existe = false;    
-			 // si le type de piece existe dÈj‡ dans la liste de PieceIHM     
-			 // ajout des coordonnÈes de la piËce dans la liste de Coord de ce type     
-			 // si elle est toujours en jeu (x et y != -1)    
-			 for ( PieceIHM pieceIHM : list){         
-				 if ((pieceIHM.getTypePiece()).equals(piece.getClass().getSimpleName())){      
-					 existe = true;      
-					 if (piece.getX() != -1){       
-						 pieceIHM.add(new Coord(piece.getX(), piece.getY()));      
-					 }     
-				 }       
-			 }    
-			 // sinon, crÈation d'une nouvelle PieceIHM si la piËce est toujours en jeu    
-			 if (! existe) {     
-				 if (piece.getX() != -1){      
-					 newPieceIHM = new PieceIHM(piece.getClass().getSimpleName(), piece.getCouleur());
-					 newPieceIHM.add(new Coord(piece.getX(), piece.getY()));
-					 list.add(newPieceIHM);
-				 }    
-			 }   
-		 }   
-		 return list;
-	 }
-	 
-	 public void setCastling() {
-		 //TODO
-	 }
-	 
-	 public void undoMove() {
-	 }
-	 
-	 public void undoCapture() {
-		 
-	 }
-	 
-	 public boolean isPawnPromotion(int xFinal, int yfinal) {
-		 boolean result = false;
-		 if (yfinal == 8) {
-			 result = true;
-		 }
-		 return result;
-	 }
-	 
-	 public boolean pawnPromotion(int xFinal, int yfinal, java.lang.String type) {
-		 //TODO
-		 return false;
-	 }
-	 
-	 public Coord getKingCoord() {
-		 Coord result = new Coord(0,0);
-		 for (Pieces i : this.Pieces) {
-			 if (i instanceof Roi){
-				 result.setX(i.getX());
-				 result.setY(i.getY());
-			 }
-		 }
-		 return result;
-	 }
-
-
+	private Pieces findPiece(int x, int y) {
+		if (isPieceHere(x, y)) {
+			for (Pieces p : pieces) {
+				if (x == p.getX() && y == p.getY()) {
+					return p;
+				}
+			}
+		}
+		return null;
+	}
+    
+	public Couleur getCouleur() {
+		return this.couleur;
+	}
+	           
+	public Coord getKingCoord() {
+		for (Pieces p : pieces) {
+			if (p.getClass().getSimpleName() == "Roi") {
+				Coord c = new Coord(p.getX(),p.getY());
+				return c;
+			}	
+		}
+		return null;
+	}
+	           
+	public Couleur getPieceColor(int x, int y) {
+		Pieces p = findPiece(x, y);
+		if (p != null) {
+			return p.getCouleur();
+		}
+		return Couleur.NOIRBLANC;
+	}
+	           
+	/**
+	* @return une vue de la liste des pi√®ces en cours
+	* ne donnant que des acc√®s en lecture sur des PieceIHM
+	* (type piece + couleur + liste de coordonn√©es)
+	*/
+	public List<PieceIHM> getPiecesIHM(){
+		PieceIHM newPieceIHM = null;
+		List<PieceIHM> list = new LinkedList<PieceIHM>();
+		for (Pieces piece : pieces){
+			boolean existe = false;
+			// si le type de piece existe d√©j√† dans la liste de PieceIHM
+			// ajout des coordonn√©es de la pi√®ce dans la liste de Coord de ce type
+			// si elle est toujours en jeu (x et y != -1)
+			for ( PieceIHM pieceIHM : list){
+				if ((pieceIHM.getTypePiece()).equals(piece.getClass().getSimpleName())){
+					existe = true;
+					if (piece.getX() != -1){
+						pieceIHM.add(new Coord(piece.getX(), piece.getY()));
+					}
+				}
+			}
+			// sinon, cr√©ation d'une nouvelle PieceIHM si la pi√®ce est toujours en jeu
+			if (! existe) {
+				if (piece.getX() != -1){
+					newPieceIHM = new PieceIHM(piece.getClass().getSimpleName(),
+					piece.getCouleur());
+					newPieceIHM.add(new Coord(piece.getX(), piece.getY()));
+					list.add(newPieceIHM);
+				}
+			}
+		}
+		return list;
+	}
+	           
+	public java.lang.String getPieceType(int x, int y){
+		Pieces p = findPiece(x, y);
+		return p.getClass().getSimpleName();
+	}
+	           
+	public boolean isMoveOk(int xInit, int yInit, int xFinal, int yFinal) {
+		Pieces p = findPiece(xInit, yInit);
+		if (p != null && p.isMoveOk(xFinal, yFinal)) {
+			return true;
+		}
+		return false;
+	}
+	           
+	public boolean isPawnPromotion(int xFinal, int yFinal) {
+		Pieces p = findPiece(xFinal, yFinal);
+		if (p.getClass().getSimpleName() == "Pion" && (yFinal == 0 || yFinal == 7)) {
+			return true;
+		}
+		return false;
+	}
+	           	           
+	public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
+		if (isMoveOk(xInit, yInit, xFinal, yFinal)) {
+			Pieces p = findPiece(xInit, yInit);
+			p.move(xFinal, yFinal);
+			return true;
+		}
+		return false;
+	}
+	           
+	public boolean pawnPromotion(int xFinal, int yFinal, java.lang.String type) {
+		if (isPawnPromotion(xFinal, yFinal)) {
+			Coord c = new Coord(xFinal, yFinal);
+			Pieces p = null;
+			if (type == "Fou") {
+				p = new Fou(this.couleur, c);
+			} else if (type == "Cavalier") {
+				p = new Cavalier(this.couleur, c);
+			} else if (type == "Tour") {
+				p = new Tour(this.couleur, c);
+			}else {
+				p = new Reine(this.couleur, c);
+			}
+			Pieces pion = findPiece(xFinal, yFinal);
+			this.pieces.remove(pion);
+			this.pieces.add(p);
+		}
+		return false;
+	}
 }
-
-

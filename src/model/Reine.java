@@ -2,25 +2,19 @@ package model;
 
 public class Reine extends AbstractPiece {
 
-	public Reine(Couleur couleur,Coord coord) {
+	public Reine(Couleur couleur, Coord coord){
 		super(couleur, coord);
-		
 	}
-	
-	public boolean isMoveOk(int xFinal, int yFinal) {
-		if (xFinal > 8)
-			return false; //On vérifie qu'on reste sur l'échiquier
-		else if (yFinal > 8)
-			return false;
-		else if (xFinal == this.coord.X()) // les deux déplacements selon x et y
-			return true;
-		else if (yFinal == this.coord.Y()) 
-			return true;
-		else if (Math.abs(xFinal - this.coord.X()) == Math.abs(yFinal - this.coord.Y())) // déplacement en diagonale
-			return true;
-		else 
-			return false;
-	}
-	
 
+	@Override
+	public boolean isMoveOk(int xFinal, int yFinal) {
+		boolean ret = false;
+		if (this.getX() == xFinal && this.getY() == yFinal) {}
+		else if (xFinal == this.getX() || yFinal == this.getY()) {
+			ret = true;
+		}else if (Math.abs(this.getX())-xFinal == Math.abs(this.getY())-yFinal) {
+			ret = true;
+		}
+		return ret;
+	}
 }

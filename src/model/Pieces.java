@@ -1,22 +1,16 @@
 package model;
 
-/**
- * 
- */
-
-/**
- * @author cypri
- *
- */
 public interface Pieces {
-
-	public int getX();
-	public int getY();
 	
-	public Couleur getCouleur();
-	public boolean isMoveOk(int xFinal, int yFinal);
-	public boolean move(int xFinal, int yFinal);	
-	public boolean capture();
-	
+	boolean capture();
+    
+	 Couleur getCouleur();
+	           
+	 int getX();
+	           
+	 int getY();
+	           
+	 boolean isMoveOk(int xFinal, int yFinal);
+	           
+	 boolean move(int xFinal, int yFinal);
 }
-
