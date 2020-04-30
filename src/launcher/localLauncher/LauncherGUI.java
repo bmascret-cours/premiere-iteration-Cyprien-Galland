@@ -42,7 +42,7 @@ public class LauncherGUI {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocation(600, 10);
-		frame.setPreferredSize(dim);
+		frame.setSize(dim);
 		frame.pack();
 		frame.setVisible(true);
 	}
