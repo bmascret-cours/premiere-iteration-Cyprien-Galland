@@ -3,7 +3,10 @@ package tools;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import model.Coord;
 import model.Couleur;
+import model.Tour;
 
 /**
  * @author francoise.perrin
@@ -43,7 +46,7 @@ public class ChessImageProvider {
 		key = pieceType + pieceCouleur.name();
 		value = mapImage.get(key);
 		File g=new File("");
-		ret = g.getAbsolutePath()+"\\images\\" + value;
+		ret = g.getAbsolutePath()+"/images/" + value;
 		return ret;		
 	}
 
@@ -52,7 +55,11 @@ public class ChessImageProvider {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println(ChessImageProvider.getImageFile("Tour", Couleur.NOIR));
+		Tour k = new Tour(Couleur.NOIRBLANC, new Coord (0,0));
+		String nom = k.getClass().getName().split("model.")[1];
+		System.out.println(ChessImageProvider.getImageFile(nom, Couleur.NOIR)); 
+
+        
 	}
 
 }

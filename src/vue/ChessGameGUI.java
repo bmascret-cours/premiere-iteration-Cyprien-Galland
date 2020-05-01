@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
+import java.util.Hashtable;
 import java.util.Observable;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -14,6 +16,9 @@ import javax.swing.JPanel;
 import controler.ChessGameControlers;
 
 import model.Couleur;
+import model.Jeu;
+import model.Pieces;
+import tools.ChessImageProvider;
 
 public class ChessGameGUI
 extends javax.swing.JFrame
@@ -55,6 +60,68 @@ implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, jav
 	  else
 	  square.setBackground( i % 2 == 0 ? Color.white : Color.black );
 	  }
+	  
+	  Jeu noir = new Jeu(Couleur.NOIR);
+	  Jeu blanc = new Jeu(Couleur.BLANC);
+	  
+	  JLabel piece = new JLabel( new ImageIcon("/home/tp/git/premiere-iteration-Cyprien-Galland/images/tourNoireS.png") );
+	  JPanel panel = (JPanel)chessBoard.getComponent(0);
+	  panel.add(piece);
+	  
+	  for (int k =0; k<noir.getPieces().size(); k++) {
+		  Pieces i = noir.getPieces().get(k);
+		  piece = new JLabel( new ImageIcon(ChessImageProvider.getImageFile(i.getClass().getName().split("model.")[1], i.getCouleur()) ));
+		  	  
+		  int n = k;
+		  if (k == 1) {
+			  n = 7;
+		  }
+		  if (k == 2) {
+			  n = 1;
+		  }
+		  if (k == 3) {
+			  n = 6;
+		  }
+		  if (k == 4) {
+			  n = 2;
+		  }
+		  if (k == 6) {
+			  n = 4;
+		  }
+		  if (k == 7) {
+			  n = 3;
+		  }
+		  
+		  panel = (JPanel)chessBoard.getComponent(n);
+		  panel.add(piece);
+	  }
+	  for (int k =0; k<blanc.getPieces().size(); k++) {
+		  Pieces i = blanc.getPieces().get(k);
+		  piece = new JLabel( new ImageIcon(ChessImageProvider.getImageFile(i.getClass().getName().split("model.")[1], i.getCouleur()) ));
+		  
+		  int n = k;
+		  if (k == 1) {
+			  n = 7;
+		  }
+		  if (k == 2) {
+			  n = 1;
+		  }
+		  if (k == 3) {
+			  n = 6;
+		  }
+		  if (k == 4) {
+			  n = 2;
+		  }
+		  if (k == 6) {
+			  n = 3;
+		  }
+		  if (k == 7) {
+			  n = 4;
+		  }
+		  
+		  panel = (JPanel)chessBoard.getComponent(63-n);
+		  panel.add(piece);
+	  }	  
 	  }
 	
 

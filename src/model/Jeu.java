@@ -17,13 +17,13 @@ public class Jeu {
 	
 	public String toString() {
 		String ret = "";
-		for (Pieces p : pieces) {
+		for (Pieces p : getPieces()) {
 			ret = ret + p.toString();
 		}
 		return ret;
 	}
 	public boolean isPieceHere(int x, int y) {
-		for (Pieces p : pieces) {
+		for (Pieces p : getPieces()) {
 			if (x == p.getX() && y == p.getY()) {
 				return true;
 			}
@@ -33,7 +33,7 @@ public class Jeu {
 	
 	private Pieces findPiece(int x, int y) {
 		if (isPieceHere(x, y)) {
-			for (Pieces p : pieces) {
+			for (Pieces p : getPieces()) {
 				if (x == p.getX() && y == p.getY()) {
 					return p;
 				}
@@ -47,7 +47,7 @@ public class Jeu {
 	}
 	           
 	public Coord getKingCoord() {
-		for (Pieces p : pieces) {
+		for (Pieces p : getPieces()) {
 			if (p.getClass().getSimpleName() == "Roi") {
 				Coord c = new Coord(p.getX(),p.getY());
 				return c;
@@ -72,7 +72,7 @@ public class Jeu {
 	public List<PieceIHM> getPiecesIHM(){
 		PieceIHM newPieceIHM = null;
 		List<PieceIHM> list = new LinkedList<PieceIHM>();
-		for (Pieces piece : pieces){
+		for (Pieces piece : getPieces()){
 			boolean existe = false;
 			// si le type de piece existe déjà dans la liste de PieceIHM
 			// ajout des coordonnées de la pièce dans la liste de Coord de ce type
@@ -142,9 +142,13 @@ public class Jeu {
 				p = new Reine(this.couleur, c);
 			}
 			Pieces pion = findPiece(xFinal, yFinal);
-			this.pieces.remove(pion);
-			this.pieces.add(p);
+			this.getPieces().remove(pion);
+			this.getPieces().add(p);
 		}
 		return false;
+	}
+
+	public List<Pieces> getPieces() {
+		return pieces;
 	}
 }
