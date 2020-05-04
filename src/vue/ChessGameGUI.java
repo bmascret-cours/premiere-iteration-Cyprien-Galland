@@ -86,6 +86,7 @@ implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, jav
 	  }
 	
 
+
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
@@ -142,14 +143,19 @@ implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, jav
 		 chessPiece.setLocation(me.getX() + xAdjustment, me.getY() + yAdjustment);
 		 }
 		 
-		  //Drop the chess piece back onto the chess board
+		  //Permet de voir la pièce bouger : pas nécéssaire, mais plus esthetique.
 		 
 	public void mouseReleased(MouseEvent e) {
 		  if(chessPiece == null) return;
 		 
 		  chessPiece.setVisible(false);
 		  Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
-		 
+		  
+		  //TODO
+		 /*vérifier que déplacement possible.
+		  // si déplacement possible, alors le faire et mettre a jour (appel de update, à coder).
+		  //sinon, ne rien faire.*/
+		  
 		  if (c instanceof JLabel){
 		  Container parent = c.getParent();
 		  parent.remove(0);
