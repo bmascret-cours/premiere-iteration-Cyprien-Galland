@@ -2,7 +2,10 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
 import java.util.Observable;
@@ -14,7 +17,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import controler.ChessGameControlers;
-
+import model.Coord;
 import model.Couleur;
 import model.Jeu;
 import model.Pieces;
@@ -70,56 +73,14 @@ implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, jav
 	  
 	  for (int k =0; k<noir.getPieces().size(); k++) {
 		  Pieces i = noir.getPieces().get(k);
-		  piece = new JLabel( new ImageIcon(ChessImageProvider.getImageFile(i.getClass().getName().split("model.")[1], i.getCouleur()) ));
-		  	  
-		  int n = k;
-		  if (k == 1) {
-			  n = 7;
-		  }
-		  if (k == 2) {
-			  n = 1;
-		  }
-		  if (k == 3) {
-			  n = 6;
-		  }
-		  if (k == 4) {
-			  n = 2;
-		  }
-		  if (k == 6) {
-			  n = 4;
-		  }
-		  if (k == 7) {
-			  n = 3;
-		  }
-		  
-		  panel = (JPanel)chessBoard.getComponent(n);
+		  piece = new JLabel( new ImageIcon(ChessImageProvider.getImageFile(i.getClass().getName().split("model.")[1], i.getCouleur()) ));		  
+		  panel = (JPanel)chessBoard.getComponent(new Coord(i.getX(), i.getY()).conversion_coord_panel());
 		  panel.add(piece);
 	  }
 	  for (int k =0; k<blanc.getPieces().size(); k++) {
 		  Pieces i = blanc.getPieces().get(k);
-		  piece = new JLabel( new ImageIcon(ChessImageProvider.getImageFile(i.getClass().getName().split("model.")[1], i.getCouleur()) ));
-		  
-		  int n = k;
-		  if (k == 1) {
-			  n = 7;
-		  }
-		  if (k == 2) {
-			  n = 1;
-		  }
-		  if (k == 3) {
-			  n = 6;
-		  }
-		  if (k == 4) {
-			  n = 2;
-		  }
-		  if (k == 6) {
-			  n = 3;
-		  }
-		  if (k == 7) {
-			  n = 4;
-		  }
-		  
-		  panel = (JPanel)chessBoard.getComponent(63-n);
+		  piece = new JLabel( new ImageIcon(ChessImageProvider.getImageFile(i.getClass().getName().split("model.")[1], i.getCouleur()) ));		  
+		  panel = (JPanel)chessBoard.getComponent(new Coord(i.getX(), i.getY()).conversion_coord_panel());
 		  panel.add(piece);
 	  }	  
 	  }
@@ -131,11 +92,7 @@ implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, jav
 		
 	}
 
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
@@ -161,15 +118,48 @@ implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, jav
 		
 	}
 
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+
+	
+	
+	public void mousePressed(MouseEvent e){
+		  chessPiece = null;
+		  Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+		 
+		  if (c instanceof JPanel) 
+		  return;
+		 
+		  Point parentLocation = c.getParent().getLocation();
+		  xAdjustment = parentLocation.x - e.getX();
+		  yAdjustment = parentLocation.y - e.getY();
+		  chessPiece = (JLabel)c;
+		  chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+		  chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
+		  layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
+		  }
+	public void mouseDragged(MouseEvent me) {
+		  if (chessPiece == null) return;
+		 chessPiece.setLocation(me.getX() + xAdjustment, me.getY() + yAdjustment);
+		 }
+		 
+		  //Drop the chess piece back onto the chess board
+		 
+	public void mouseReleased(MouseEvent e) {
+		  if(chessPiece == null) return;
+		 
+		  chessPiece.setVisible(false);
+		  Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+		 
+		  if (c instanceof JLabel){
+		  Container parent = c.getParent();
+		  parent.remove(0);
+		  parent.add( chessPiece );
+		  }
+		  else {
+		  Container parent = (Container)c;
+		  parent.add( chessPiece );
+		  }
+		 
+		  chessPiece.setVisible(true);
+		  }
 	  }

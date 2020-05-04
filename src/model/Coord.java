@@ -67,4 +67,33 @@ public class Coord implements Serializable {
 			return false;
 		return true;
 	}
+	
+	public int conversion_coord_panel() {
+		int retour = -1;
+		if (x==0) {
+			retour = y;
+		}
+		if (x==1) {
+			retour = y+8;
+		}
+		if (x==2) {
+			retour = y+16;
+		}
+		if (x==3) {
+			retour = y+24;
+		}
+		if (x==4) {
+			retour = y+32;
+		}
+		if (x==5) {
+			retour = y+40;
+		}
+		if (x==6) {
+			retour = y+48;
+		}
+		if (x==7) {
+			retour = y+56;
+		}
+		return retour;
+	}
 }
