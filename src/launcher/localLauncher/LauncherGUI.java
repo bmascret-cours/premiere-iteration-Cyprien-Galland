@@ -45,5 +45,8 @@ public class LauncherGUI {
 		frame.setSize(dim);
 		frame.pack();
 		frame.setVisible(true);
+		
 	}
 }
+
+
